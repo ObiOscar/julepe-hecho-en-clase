@@ -143,11 +143,60 @@ public class Juego
      *    bazas) o "no es julepe".
      *
      */
-    private void jugar()
+    public void jugar()
     {
-
+        Scanner cartaLanzar = new Scanner (System.in);
+        repartir();                                                                              //1. Repartir las cartas a los jugadores.
+        int contarCartas = 0;
+        while(contarCartas < 5){                                                                 // 6. Repetir el proceso desde el punto 2 hasta que los jugadores hayan tirado todas sus cartas.
+            Baza cartasEnLaBaza = new Baza(jugadores.length,paloQuePinta);                       //Creo un objeto baza para el punto 3
+            boolean haLanzadoCarta = false;
+            while(!haLanzadoCarta){                                                              //2. Solicitar por teclado la carta que quiere lanzar el jugador humano.
+                jugadores[0].verCartasJugador();
+                System.out.println(jugadores[0].getNombre()+ " ¿Que carta de su mazo quiere tirar?");
+                System.out.println("");
+                String nombreCarta = cartaLanzar.nextLine();
+                System.out.println("");
+                System.out.println("Las cartas jugadas son: ");
+                Carta tieneCarta = jugadores[0].tirarCarta(nombreCarta);                         //Será la carta que tiene para tirar
+                if( tieneCarta!= null){
+                    cartasEnLaBaza.addCarta(tieneCarta,jugadores[0].getNombre());               //Añado la carta que lanza a la baza
+                    // jugadores[0].tirarCarta(nombreCarta);
+                    haLanzadoCarta = true;
+                }
+                else{
+                    System.out.println("Lo sentiemos "+ jugadores[0].getNombre()+ " esa carta no la tiene en su mano");
+                    System.out.println("");
+                }
+            }
         
-    }    
+            int contador = 1;
+            while(contador < (jugadores.length) ){                                              //3. Lanzar una carta por cada jugador no humano.
+                Carta cartaTiradaPorBot = jugadores[contador].tirarCartaInteligentemente(cartasEnLaBaza.getPaloPrimeraCartaDeLaBaza(),cartasEnLaBaza.cartaQueVaGanandoLaBaza(),paloQuePinta);
+                cartasEnLaBaza.addCarta(cartaTiradaPorBot,jugadores[contador].getNombre());    //Añado la carta que lanza a la baza
+                contador++;
+            }
+        
+        
+            int posicionJugadorGanaBaza = encontrarPosicionJugadorPorNombre(cartasEnLaBaza.nombreJugadorQueVaGanandoLaBaza());
+            jugadores[posicionJugadorGanaBaza].addBaza(cartasEnLaBaza);                         // 4. Darle la baza al jugador que la ha ganado.
+            System.out.println("");
+            System.out.println("Está baza la ha ganado: "+ cartasEnLaBaza.nombreJugadorQueVaGanandoLaBaza());   // 5. Informar de quÃ© jugador ha ganado la baza.
+            System.out.println("");
+            contarCartas++;                                                                    
+        }
+        
+        System.out.println(""); 
+        System.out.println("El jugador humano "+jugadores[0].getNombre()+ " ha ganado " + jugadores[0].getNumeroBazasGanadas());    //7. Informar de cuÃ¡ntas bazas ha ganado el jugador humano.
+        System.out.println("");      
+                
+        if (jugadores[0].getNumeroBazasGanadas() < 2){                                          //8. Indicar si el jugador humano "es julepe" (ha ganado menos de dos bazas) o "no es julepe".
+              System.out.println("Lo sentimos "+jugadores[0].getNombre()+ " eres julepe ");  
+        }
+        else{
+              System.out.println("GENIAL "+jugadores[0].getNombre()+ " NO eres julepe ");  
+        }
+    }   
 }
 
 
