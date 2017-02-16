@@ -108,7 +108,15 @@ public class Juego
      */
     private int encontrarPosicionJugadorPorNombre(String nombre)
     {
-        
+        int devuelve = -1;
+        int contador = -1;          //Me la quiero cargar pero voy mal de tiempo...de momento funciona
+         for(Jugador jugador : jugadores){
+            contador++;
+            if(jugador.getNombre().equals(nombre)){
+                devuelve = contador;
+            }
+        }
+        return devuelve;
     }
     
         
