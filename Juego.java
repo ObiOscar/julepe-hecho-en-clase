@@ -11,7 +11,8 @@ public class Juego
 {
     private Jugador[] jugadores;
     private Mazo mazo;
-    private int paloQuePinta;
+    private Palo paloQuePinta;
+    private static final int NUMERO_DE_RONDAS = 5;
 
 
     /**
@@ -66,7 +67,7 @@ public class Juego
      *
      * @return El palo que pinta tras repartir
      */
-    private int repartir() 
+    private Palo repartir() 
     {
         mazo.barajar();
 
@@ -79,20 +80,7 @@ public class Juego
         }
 
         paloQuePinta = nuevaCarta.getPalo();
-        switch (paloQuePinta) {
-            case 0:
-            System.out.println("Pintan oros");
-            break;
-            case 1:
-            System.out.println("Pintan copas");
-            break;
-            case 2:
-            System.out.println("Pintan espadas");
-            break;
-            case 3:
-            System.out.println("Pintan bastos");
-            break;
-        }
+
 
         return paloQuePinta;           
     }
@@ -148,11 +136,18 @@ public class Juego
         Scanner cartaLanzar = new Scanner (System.in);
         repartir();                                                                              //1. Repartir las cartas a los jugadores.
         int contarCartas = 0;
-        while(contarCartas < 5){                                                                 // 6. Repetir el proceso desde el punto 2 hasta que los jugadores hayan tirado todas sus cartas.
+        while(contarCartas < NUMERO_DE_RONDAS){                                                   // 6. Repetir el proceso desde el punto 2 hasta que los jugadores hayan tirado todas sus cartas.
             Baza cartasEnLaBaza = new Baza(jugadores.length,paloQuePinta);                       //Creo un objeto baza para el punto 3
             boolean haLanzadoCarta = false;
+            int  contadorJugadores = 0;                                                                            
+            while(contadorJugadores < (jugadores.length) ){  
+                System.out.println("\nlas cartas de "+jugadores[contadorJugadores].getNombre()+ " son");        
+                jugadores[contadorJugadores].verCartasJugador();
+                contadorJugadores++;
+            }
+            
             while(!haLanzadoCarta){                                                              //2. Solicitar por teclado la carta que quiere lanzar el jugador humano.
-                jugadores[0].verCartasJugador();
+                //jugadores[0].verCartasJugador();
                 System.out.println(jugadores[0].getNombre()+ " ¿Que carta de su mazo quiere tirar?");
                 System.out.println("");
                 String nombreCarta = cartaLanzar.nextLine();
@@ -161,7 +156,6 @@ public class Juego
                 Carta tieneCarta = jugadores[0].tirarCarta(nombreCarta);                         //Será la carta que tiene para tirar
                 if( tieneCarta!= null){
                     cartasEnLaBaza.addCarta(tieneCarta,jugadores[0].getNombre());               //Añado la carta que lanza a la baza
-                    // jugadores[0].tirarCarta(nombreCarta);
                     haLanzadoCarta = true;
                 }
                 else{

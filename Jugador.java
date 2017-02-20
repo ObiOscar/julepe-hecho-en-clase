@@ -114,7 +114,6 @@ public class Jugador
                     elJugadorHaTiradoUnaCarta = true;
                 }
             }
-            
         }
         
         return cartaTirada;
@@ -124,12 +123,63 @@ public class Jugador
     /**
      * Método que tira una carta "inteligentemente"
      */
-    public Carta tirarCartaInteligentemente(int paloPrimeraCartaDeLaBaza, 
+    public Carta tirarCartaInteligentemente(Palo paloPrimeraCartaDeLaBaza, 
                                             Carta cartaQueVaGanando,
-                                            int paloQuePinta)
+                                            Palo paloQuePinta)
     {
         return tirarCartaAleatoria();        
     }
+    
+    
+    /**este es mio
+     */
+     
+     
+   /*  public Carta tirarCartaInteligentemente1(int paloPrimeraCartaDeLaBaza, Carta cartaQueVaGanando,int paloQuePinta)
+    {
+        Carta cartaTirada = null;
+        boolean elJugadorHaTiradoUnaCarta = false;
+       int cartaActual = 0;
+        
+        if(numeroCartasEnLaMano > 0){
+            for(Carta cartaMirar : cartasQueTieneEnLaMano){
+                 if (cartasQueTieneEnLaMano[cartaActual] != null && !elJugadorHaTiradoUnaCarta) {  
+                           //Si el palo de la primera carta de la baza == al de mi carta
+                              if(paloPrimeraCartaDeLaBaza == cartaMirar.getPalo()){          
+                                  //Si la carta a mirar gana a la carta que va ganando devuelve true            
+                                  if(cartaMirar.ganaA(cartaQueVaGanando,paloPrimeraCartaDeLaBaza)){         
+                                      cartaTirada = cartaMirar;     
+                                      cartasQueTieneEnLaMano[cartaActual] = null;
+                                      numeroCartasEnLaMano--;
+                                      elJugadorHaTiradoUnaCarta = true;
+                                 }
+                                 //Si no puedo ganar a la carta que va ganando tengo que asistir  al palo de la baza
+                                 else{
+                                     cartaTirada = cartaMirar;     
+                                     cartasQueTieneEnLaMano[cartaActual] = null;
+                                     numeroCartasEnLaMano--;
+                                     elJugadorHaTiradoUnaCarta = true;
+                                 }
+                              } 
+
+                              //Si el palo de la primera carta de la baza != al de mi carta
+                              else{            
+                                  //El palo de la carta = al palo que pinta                                                         
+                                if(cartaMirar.getPalo() == paloQuePinta ){       
+                                    cartaTirada = cartaMirar;     
+                                    cartasQueTieneEnLaMano[cartaActual] = null;
+                                    numeroCartasEnLaMano--;
+                                    elJugadorHaTiradoUnaCarta = true;;    
+                                }                    
+                           }
+                 }
+                 cartaActual++;
+            } 
+       }
+            System.out.println(nombre + " ha tirado " + cartaTirada);
+            return cartaTirada;    
+    }*/
+   
     
     
     /**
@@ -149,9 +199,6 @@ public class Jugador
     {
         return bazasGanadas.size();
     }
-    
-    
-    
 }
 
 
