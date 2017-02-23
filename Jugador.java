@@ -161,7 +161,7 @@ public class Jugador
             //Si no hemos conseguido una carta del mismo palo del paloPrimeraCartaDeLaBaza que gane pues busco una carta que no gane, o que sea del paloQuePinta
             if(cartaTirada == null){                                                                               
                 for(Carta cartaMirar : cartasQueTieneEnLaMano){                                                      
-                    if (cartasQueTieneEnLaMano[contador] != null && !elJugadorHaTiradoUnaCarta) {                  //Si la carta que estamos mirando es distinto de nulo y el jugador no ha tirado carta    
+                    if (!elJugadorHaTiradoUnaCarta && cartasQueTieneEnLaMano[contador] != null) {                  //Si la carta que estamos mirando es distinto de nulo y el jugador no ha tirado carta    
                         //Si el paloPrimeraCartaDeLaBaza == al de mi carta,(esto ya lo habia comprobado en el for de más arriba) y no puedo ganara a la cartaQueVaGanando pues tengo que asistir al palo si o si.
                         if(paloPrimeraCartaDeLaBaza == cartaMirar.getPalo() && cartaTirada == null && !elJugadorHaTiradoUnaCarta){                                      
                             cartaTirada = cartaMirar;                                                              
@@ -170,21 +170,30 @@ public class Jugador
                             elJugadorHaTiradoUnaCarta = true;                                                      
                          } 
                         //Sino tengo cartas del paloPrimeraCartaDeLaBaza tengo que lanzar una carta que sea del paloQuePinta
-                         else{                                                                                                                                    
-                              if(!elJugadorHaTiradoUnaCarta && cartaMirar.getPalo() == paloQuePinta){              //Compruebo que no haya tirado ninguna carta y que el palo a mirar es = al palo que pinta              
+                         else{  
+                          
+                          while(!elJugadorHaTiradoUnaCarta && numeroCartasEnLaMano < contador){
+                              if(!elJugadorHaTiradoUnaCarta && cartaMirar.getPalo() == paloQuePinta && cartaMirar.ganaA(cartaQueVaGanando,paloQuePinta)){              //Compruebo que no haya tirado ninguna carta y que el palo a mirar es = al palo que pinta              
                                   cartaTirada = cartaMirar;     
                                   cartasQueTieneEnLaMano[contador] = null;
                                   numeroCartasEnLaMano--;
                                   elJugadorHaTiradoUnaCarta = true;;    
                               }
-                        }           
+                            }
+                          if(!elJugadorHaTiradoUnaCarta && cartaMirar.getPalo() == paloQuePinta){                           //si los dos jugadores no tienen paloPrimeraCartaDeLaBaza y no gana a la anterior carta del palo                          
+                                        cartaTirada = cartaMirar;                                                              
+                                        cartasQueTieneEnLaMano[contador] = null;                                               
+                                        numeroCartasEnLaMano--;                                                               
+                                        elJugadorHaTiradoUnaCarta = true;                                                      
+                           }    
+                        }         
                     }
                     contador++;
                 }
              }
              
             //Si no hemos conseguido una carta del mismo palo del paloPrimeraCartaDeLaBaza y tampoco del paloQuePinta pues que lance una aleatorio
-            if(cartaTirada == null){                                                
+           if(cartaTirada == null){                                                
                 contador = 0;
                 for(Carta cartaMirar : cartasQueTieneEnLaMano){
                     if (cartasQueTieneEnLaMano[contador] != null && !elJugadorHaTiradoUnaCarta) {                  //Si la carta que estamos mirando es distinto de nulo y el jugador no ha tirado carta    
