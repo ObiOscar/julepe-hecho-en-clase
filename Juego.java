@@ -78,10 +78,9 @@ public class Juego
                 jugadores[jugadorActual].recibirCarta(nuevaCarta);
             }
         }
-
         paloQuePinta = nuevaCarta.getPalo();
-
-
+        System.out.println(paloQuePinta.toString().toLowerCase());           //Imprimo en mayusculas el palo que pinta, no lo hago en minusculas porque quiero que destaque
+        
         return paloQuePinta;           
     }
    
